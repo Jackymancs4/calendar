@@ -492,8 +492,16 @@ class CalendarWeek extends CalendarObj {
 
     parent::__construct(date('Y', $monday), date('m', $monday), date('d', $monday), 0, 0, 0);
     
+    $this->yearINT = intval($year);
+    $this->weekINT = intval($week);
   }
   
+  function year($year=false) {
+
+    if(!$year) $year = $this->yearINT;
+    return new CalendarYear($year, 1, 1, 0, 0, 0);
+  }
+
   function years() {
     $array = array();
     $array[] = $this->firstDay()->year();
@@ -543,9 +551,10 @@ class CalendarWeek extends CalendarObj {
   function next() {
 
     $next = strtotime('Thursday next week', $this->timestamp);
+
     $year = date('Y', $next);
     $week = date('W', $next);
-                                  
+
     return new CalendarWeek($year, $week);
 
   }
